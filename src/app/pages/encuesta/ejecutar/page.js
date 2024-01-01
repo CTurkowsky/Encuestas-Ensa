@@ -1,10 +1,12 @@
 'use client'
 
+import Preguntas from '@/app/components/Preguntas'
 import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 export default function FormPage() {
   const [showButtons, setShowButtons] = useState(false)
+  const [showPreguntas, setShowPreguntas] = useState(false)
   const { register, handleSubmit, reset } = useForm()
 
   const onSubmit = useCallback(
@@ -23,16 +25,19 @@ export default function FormPage() {
     setShowButtons(true)
   }, [])
 
+  const buttonShowPreguntas = () => {
+    setShowPreguntas(true)
+  }
   return (
     <div className='flex items-center justify-center min-h-screen  py-12 px-4 sm:px-6 lg:px-8'>
       <div className='max-w-md w-full space-y-8'>
         <h2 className='mt-6 text-center text-3xl  text-gray-900'>
-          Formulario de encuesta
+          EJECUCION DE ENCUESTA
         </h2>
         <form className='mt-8 space-y-6' onSubmit={handleSubmit(onSubmit)}>
           <div className='rounded-md shadow-sm -space-y-px'>
             <div>
-              <label className='text-base'>Suministro</label>
+              <label className='block text-gray-700 text-sm font-bold mb-2'>Suministro</label>
               <input
                 type='text'
                 {...register('suministro')}
@@ -56,6 +61,7 @@ export default function FormPage() {
               <div>
                 <button
                   type='submit'
+                  onClick={buttonShowPreguntas}
                   className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-lime-500 hover:bg-lime-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-800'
                 >
                   Contesta
@@ -66,11 +72,12 @@ export default function FormPage() {
                 >
                   No contesta
                 </button>
+                {showPreguntas && <Preguntas />}
               </div>
             )}
           </div>
         </form>
       </div>
     </div>
-  );
+  )
 }
